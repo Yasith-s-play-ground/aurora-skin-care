@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="517.0" prefWidth="748.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.esoft.kingston.auroraskincare.view_controller.AppointmentsByDateViewController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="31.0" prefHeight="36.0" prefWidth="713.0" text="View Appointments By Date" textAlignment="CENTER">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="datePicker" layoutX="276.0" layoutY="93.0" onAction="#datePickerOnAction" />
+      <Button fx:id="btnClose" cancelButton="true" layoutX="338.0" layoutY="463.0" mnemonicParsing="false" onAction="#btnCloseOnAction" text="Close">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <ScrollPane layoutX="40.0" layoutY="143.0" prefHeight="312.0" prefWidth="674.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="315.0" prefWidth="673.0">
+               <children>
+                  <TableView fx:id="tblAppointment" layoutX="2.0" prefHeight="312.0" prefWidth="666.0">
+                    <columns>
+                      <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
+                      <TableColumn fx:id="colTime" prefWidth="75.0" text="Time" />
+                        <TableColumn fx:id="colPatient" prefWidth="186.0" text="Patient" />
+                        <TableColumn fx:id="colDoctor" prefWidth="179.0" text="Dermatologist" />
+                        <TableColumn fx:id="colTreatment" prefWidth="139.0" text="Treatment" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
