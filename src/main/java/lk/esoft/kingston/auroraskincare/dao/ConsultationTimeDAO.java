@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConsultationTimeDAO {
-    public void addConsultationTime(ConsultationTime consultationTime) throws SQLException {
+    public boolean addConsultationTime(ConsultationTime consultationTime) throws SQLException {
         String query = "INSERT INTO consultation_time (day_of_week, start_time, end_time) VALUES (?, ?, ?)";
         Connection conn = SingletonConnection.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, consultationTime.getDayOfWeek());
         stmt.setTime(2, Time.valueOf(consultationTime.getStartTime()));
         stmt.setTime(3, Time.valueOf(consultationTime.getEndTime()));
-        stmt.executeUpdate();
+        return stmt.executeUpdate() > 0;
 
     }
 

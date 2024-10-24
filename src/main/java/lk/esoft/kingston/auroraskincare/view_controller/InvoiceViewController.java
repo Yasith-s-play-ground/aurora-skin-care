@@ -50,11 +50,13 @@ public class InvoiceViewController {
             //Save Invoice
             Invoice invoice = new Invoice(appointmentId, paymentId, LocalDate.now(), totalAmount, taxAmount);
             InvoiceDAO invoiceDAO = new InvoiceDAO();
-            invoiceDAO.createInvoice(invoice);
-
-            new Alert(Alert.AlertType.INFORMATION, "Invoice saved successfully").show();
-            clearDetails();
-
+            boolean saved = invoiceDAO.createInvoice(invoice);
+            if (saved) {
+                new Alert(Alert.AlertType.INFORMATION, "Invoice saved successfully").show();
+                clearDetails();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Saving failed!").show();
+            }
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Saving failed!").show();

@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DermatologistDAO {
-    public void addDermatologist(Dermatologist dermatologist) throws SQLException {
+    public boolean addDermatologist(Dermatologist dermatologist) throws SQLException {
         String query = "INSERT INTO dermatologist (name, email, phone) VALUES (?, ?, ?)";
         Connection conn = SingletonConnection.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, dermatologist.getName());
         stmt.setString(2, dermatologist.getEmail());
         stmt.setString(3, dermatologist.getPhone());
-        stmt.executeUpdate();
+        return stmt.executeUpdate() > 0;
 
     }
 
@@ -56,6 +56,5 @@ public class DermatologistDAO {
         return dermatologists;
     }
 
-    // TODO add update, delete, and search methods
 }
 

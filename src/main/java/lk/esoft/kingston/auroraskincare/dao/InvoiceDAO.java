@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class InvoiceDAO {
 
     // Method to create a new Invoice record
-    public void createInvoice(Invoice invoice) throws SQLException {
+    public boolean createInvoice(Invoice invoice) throws SQLException {
         String query = "INSERT INTO invoice ( payment_id, total_amount, tax_amount, issue_date) VALUES (?, ?, ?, ?)";
 
         Connection connection = SingletonConnection.getInstance().getConnection();
@@ -23,7 +23,7 @@ public class InvoiceDAO {
         preparedStatement.setDouble(3, invoice.getTaxAmount());
         preparedStatement.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
 
-        preparedStatement.executeUpdate();
+        return preparedStatement.executeUpdate() > 0;
 
     }
 
@@ -53,17 +53,17 @@ public class InvoiceDAO {
     }
 
     // Method to update an existing Invoice
-    public void updateInvoice(int id, double totalAmount, double taxAmount) throws SQLException {
+    public boolean updateInvoice(Invoice invoice) throws SQLException {
         String query = "UPDATE invoice SET total_amount = ?, tax_amount = ? WHERE id = ?";
 
         Connection connection = SingletonConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-        preparedStatement.setDouble(1, totalAmount);
-        preparedStatement.setDouble(2, taxAmount);
-        preparedStatement.setInt(3, id);
+        preparedStatement.setDouble(1, invoice.getTotalAmount());
+        preparedStatement.setDouble(2, invoice.getTaxAmount());
+        preparedStatement.setInt(3, invoice.getId());
 
-        preparedStatement.executeUpdate();
+        return preparedStatement.executeUpdate() > 0;
 
     }
 

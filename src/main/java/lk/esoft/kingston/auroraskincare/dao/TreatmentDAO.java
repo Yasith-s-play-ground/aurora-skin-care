@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreatmentDAO {
-    public void addTreatment(Treatment treatment) throws SQLException {
+    public boolean addTreatment(Treatment treatment) throws SQLException {
         String query = "INSERT INTO treatment (name, price) VALUES (?, ?)";
         Connection conn = SingletonConnection.getInstance().getConnection();
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, treatment.getName());
         stmt.setDouble(2, treatment.getPrice());
-        stmt.executeUpdate();
+        return stmt.executeUpdate() > 0;
 
     }
 
