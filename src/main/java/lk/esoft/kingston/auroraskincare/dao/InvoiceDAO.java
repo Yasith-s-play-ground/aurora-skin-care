@@ -13,16 +13,15 @@ public class InvoiceDAO {
 
     // Method to create a new Invoice record
     public void createInvoice(Invoice invoice) throws SQLException {
-        String query = "INSERT INTO invoice (appointment_id, payment_id, total_amount, tax_amount, issue_date) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO invoice ( payment_id, total_amount, tax_amount, issue_date) VALUES (?, ?, ?, ?)";
 
         Connection connection = SingletonConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-        preparedStatement.setInt(1, invoice.getAppointmentId());
-        preparedStatement.setInt(2, invoice.getPaymentId());
-        preparedStatement.setDouble(3, invoice.getTotalAmount());
-        preparedStatement.setDouble(4, invoice.getTaxAmount());
-        preparedStatement.setDate(5, java.sql.Date.valueOf(LocalDate.now()));
+        preparedStatement.setInt(1, invoice.getPaymentId());
+        preparedStatement.setDouble(2, invoice.getTotalAmount());
+        preparedStatement.setDouble(3, invoice.getTaxAmount());
+        preparedStatement.setDate(4, java.sql.Date.valueOf(LocalDate.now()));
 
         preparedStatement.executeUpdate();
 
@@ -30,7 +29,7 @@ public class InvoiceDAO {
 
     // Method to retrieve an Invoice by its ID
     public Invoice getInvoiceById(int invoiceId) throws SQLException {
-        String query = "SELECT id, appointment_id, payment_id, total_amount, tax_amount, issue_date FROM invoice WHERE id = ?";
+        String query = "SELECT id, payment_id, total_amount, tax_amount, issue_date FROM invoice WHERE id = ?";
         Invoice invoice = null;
 
         Connection connection = SingletonConnection.getInstance().getConnection();
@@ -41,13 +40,12 @@ public class InvoiceDAO {
         try (ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                int appointmentId = resultSet.getInt("appointment_id");
                 int paymentId = resultSet.getInt("payment_id");
                 double totalAmount = resultSet.getDouble("total_amount");
                 double taxAmount = resultSet.getDouble("tax_amount");
                 LocalDate issueDate = resultSet.getDate("issue_date").toLocalDate();
 
-                invoice = new Invoice(id, appointmentId, paymentId, issueDate, totalAmount, taxAmount);
+                invoice = new Invoice(id, paymentId, issueDate, totalAmount, taxAmount);
             }
 
         }

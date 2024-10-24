@@ -56,13 +56,11 @@ CREATE TABLE payment
 CREATE TABLE invoice
 (
     id             SERIAL PRIMARY KEY,                           -- Auto-incrementing ID for the invoice
-    appointment_id INT            NOT NULL,                      -- Reference to the appointment
     payment_id     INT            NOT NULL,                      -- Reference to the payment
     issue_date     DATE           NOT NULL DEFAULT CURRENT_DATE, -- Date the invoice is issued
     total_amount   DECIMAL(10, 2) NOT NULL,                      -- Total amount on the invoice (incl. tax)
     tax_amount     DECIMAL(10, 2) NOT NULL,                      -- Amount of tax included
 
-    CONSTRAINT fk_appointment FOREIGN KEY (appointment_id) REFERENCES appointment (id),
     CONSTRAINT fk_payment FOREIGN KEY (payment_id) REFERENCES payment (id)
 );
 

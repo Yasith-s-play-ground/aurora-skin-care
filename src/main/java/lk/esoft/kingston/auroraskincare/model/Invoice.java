@@ -4,23 +4,20 @@ import java.time.LocalDate;
 
 public class Invoice {
     private int id;
-    private int appointmentId;
     private int paymentId;
     private LocalDate issueDate;
     private double totalAmount;
     private double taxAmount;
 
-    public Invoice(int id, int appointmentId, int paymentId, LocalDate issueDate, double totalAmount, double taxAmount) {
+    public Invoice(int id, int paymentId, LocalDate issueDate, double totalAmount, double taxAmount) {
         this.id = id;
-        this.appointmentId = appointmentId;
         this.paymentId = paymentId;
         this.issueDate = issueDate;
         this.totalAmount = totalAmount;
         this.taxAmount = taxAmount;
     }
 
-    public Invoice(int appointmentId, int paymentId, LocalDate issueDate, double totalAmount, double taxAmount) {
-        this.appointmentId = appointmentId;
+    public Invoice(int paymentId, LocalDate issueDate, double totalAmount, double taxAmount) {
         this.paymentId = paymentId;
         this.issueDate = issueDate;
         this.totalAmount = totalAmount;
@@ -35,14 +32,6 @@ public class Invoice {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getAppointmentId() {
-        return appointmentId;
-    }
-
-    public void setAppointmentId(int appointmentId) {
-        this.appointmentId = appointmentId;
     }
 
     public int getPaymentId() {
