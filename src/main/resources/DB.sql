@@ -82,12 +82,3 @@ INSERT INTO dermatologist (name, email, phone)
 VALUES ('Dr. Sarah Johnson', 'sarah.johnson@yahoo.com', '0712345678'),
        ('Dr. Mark Smith', 'mark.smith@gmail.com', '0723456789');
 
-UPDATE appointment
-SET
-    appointment_date = '2024-10-30',   -- New appointment date
-    appointment_time = '14:00:00',     -- New appointment time
-    patient_id = 2,                -- New patient ID
-    dermatologist_id = 1,                -- New dermatologist ID
-    treatment_id = 1                     -- New treatment ID
-WHERE
-    id = 3;
