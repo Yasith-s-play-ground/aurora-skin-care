@@ -42,22 +42,25 @@ public class InvoiceViewController {
         try {
             //Do payment
             PaymentDAO paymentDAO = new PaymentDAO();
-            paymentDAO.createPayment(payment);
+            boolean paid = paymentDAO.createPayment(payment);
 
-            Payment paymentByAppointmentIdAndFinalCategory = paymentDAO.getPaymentByAppointmentIdAndFinalCategory(appointmentId);
-            int paymentId = paymentByAppointmentIdAndFinalCategory.getId();
+            if (paid) {
+                Payment paymentByAppointmentIdAndFinalCategory = paymentDAO.getPaymentByAppointmentIdAndFinalCategory(appointmentId);
+                int paymentId = paymentByAppointmentIdAndFinalCategory.getId();
 
-            //Save Invoice
-            Invoice invoice = new Invoice(appointmentId, paymentId, LocalDate.now(), totalAmount, taxAmount);
-            InvoiceDAO invoiceDAO = new InvoiceDAO();
-            boolean saved = invoiceDAO.createInvoice(invoice);
-            if (saved) {
-                new Alert(Alert.AlertType.INFORMATION, "Invoice saved successfully").show();
-                clearDetails();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Saving failed!").show();
+                //Save Invoice
+                Invoice invoice = new Invoice(appointmentId, paymentId, LocalDate.now(), totalAmount, taxAmount);
+                InvoiceDAO invoiceDAO = new InvoiceDAO();
+                boolean saved = invoiceDAO.createInvoice(invoice);
+                if (saved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Invoice saved successfully").show();
+                    clearDetails();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Saving failed!").show();
+                }
+            }else{
+                new Alert(Alert.AlertType.ERROR, "Payment failed!").show();
             }
-
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Saving failed!").show();
             throw new RuntimeException(e);

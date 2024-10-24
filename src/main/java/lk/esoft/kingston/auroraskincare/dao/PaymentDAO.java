@@ -11,14 +11,14 @@ import java.util.List;
 
 public class PaymentDAO {
     // Method to create a new payment
-    public void createPayment(Payment payment) throws SQLException {
+    public boolean createPayment(Payment payment) throws SQLException {
         String sql = "INSERT INTO payment (appointment_id, category, amount) VALUES (?, ?, ?)";
         Connection connection = SingletonConnection.getInstance().getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, payment.getAppointmentId());
         statement.setObject(2, payment.getCategory().name(), java.sql.Types.OTHER);
         statement.setDouble(3, payment.getAmount());
-        statement.executeUpdate();
+        return statement.executeUpdate() > 0;
 
     }
 

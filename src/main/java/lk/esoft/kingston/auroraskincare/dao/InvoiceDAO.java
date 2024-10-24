@@ -68,14 +68,14 @@ public class InvoiceDAO {
     }
 
     // Method to delete an Invoice by its ID
-    public void deleteInvoice(int invoiceId) throws SQLException {
+    public boolean deleteInvoice(int invoiceId) throws SQLException {
         String query = "DELETE FROM invoice WHERE id = ?";
 
         Connection connection = SingletonConnection.getInstance().getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
 
         preparedStatement.setInt(1, invoiceId);
-        preparedStatement.executeUpdate();
+        return preparedStatement.executeUpdate() > 0;
     }
 
 }

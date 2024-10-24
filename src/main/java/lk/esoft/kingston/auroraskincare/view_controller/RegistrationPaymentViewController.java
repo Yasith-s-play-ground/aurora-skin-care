@@ -38,13 +38,18 @@ public class RegistrationPaymentViewController {
     void btnSaveOnAction(ActionEvent event) {
         Payment payment = new Payment(lastAppointmentId, PaymentCategory.REGISTRATION, 500.00, LocalDateTime.now());
         try {
-            new PaymentDAO().createPayment(payment);
-            Alert newAlert = new Alert(Alert.AlertType.INFORMATION, "Payment successful!", ButtonType.OK);
-            newAlert.show();
+            boolean paid = new PaymentDAO().createPayment(payment);
+            if (paid) {
+                Alert newAlert = new Alert(Alert.AlertType.INFORMATION, "Payment successful!", ButtonType.OK);
+                newAlert.show();
 
-            //close this window
-            Stage currentStage = (Stage) btnSave.getScene().getWindow();
-            currentStage.close();
+                //close this window
+                Stage currentStage = (Stage) btnSave.getScene().getWindow();
+                currentStage.close();
+            } else {
+                Alert newAlert = new Alert(Alert.AlertType.ERROR, "Payment failed!", ButtonType.OK);
+                newAlert.show();
+            }
         } catch (SQLException e) {
             Alert newAlert = new Alert(Alert.AlertType.ERROR, "Payment failed!", ButtonType.OK);
             newAlert.show();
